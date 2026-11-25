@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+yt-dlp
+google-genai
+faster-whisper
+edge-tts
+apscheduler
+feedparser
+requests
+google-api-python-client
+google-auth-oauthlib
+google-auth-httplib2
+playwright
+
+pillow

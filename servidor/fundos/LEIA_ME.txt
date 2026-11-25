@@ -1,0 +1,2 @@
+Opcional: coloque aqui vídeos .mp4 locais se quiser que o Agente Dark use seus próprios fundos.
+Ordem de prioridade automática: 1) Pixabay API -> 2) Pexels API -> 3) Pasta fundos/ -> 4) Fundo Dark FFmpeg.

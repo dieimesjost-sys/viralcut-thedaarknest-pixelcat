@@ -1,0 +1,3 @@
+Coloque aqui arquivos .mp3 de trilhas sonoras livres de direitos autorais (ex: suspense, lo-fi, motivacional).
+O Agente Dark escolhe uma música aleatória desta pasta e mistura em volume baixo (-18dB) atrás da narração.
+Se a pasta estiver vazia, o vídeo é gerado normalmente apenas com a narração neural.

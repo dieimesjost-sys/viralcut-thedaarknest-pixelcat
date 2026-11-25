@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>theDaarkNest · Fábrica Pixel</title>
+<style>
+:root{
+  --bg:#090b12;
+  --bg2:#101524;
+  --panel:#131a2c;
+  --panel2:#19223a;
+  --ink:#eef3ff;
+  --mut:#94a3b8;
+  --line:#2b395c;
+  --y:#ffcf26;
+  --y2:#d99b00;
+  --red:#ff3b4e;
+  --g:#22c55e;
+  --b:#38bdf8;
+  --p:#a855f7;
+  --k:#05060a;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:"Courier New",Consolas,monospace;image-rendering:pixelated}
+body{
+  background-color:#090b12;
+  background-image:
+    linear-gradient(rgba(56,189,248,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.045) 1px,transparent 1px);
+  background-size:16px 16px;
+  padding-bottom:84px;
+}
+
+/* Header estilo Fábrica Pixel Dark */
+header{
+  position:sticky;top:0;z-index:20;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:10px 12px;
+  background:#0d1220;
+  border-bottom:3px solid #000;
+  box-shadow:0 3px 0 #1f2b49;
+}
+.brand{display:flex;align-items:center;gap:9px;min-width:0}
+.brand-cat{
+  width:34px;height:34px;border:2px solid #000;border-radius:6px;
+  background:#141b2e;object-fit:cover;image-rendering:pixelated;
+  box-shadow:2px 2px 0 var(--red);flex:none;
+}
+.brand-title{font-weight:900;font-size:14px;letter-spacing:.4px;color:var(--y);text-shadow:2px 2px 0 #000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand-sub{font-size:9px;color:var(--mut);letter-spacing:.6px;text-transform:uppercase}
+
+.chip{
+  font-size:9px;font-weight:900;padding:6px 8px;
+  border:2px solid #000;border-radius:6px;
+  background:#1c253d;color:#e2e8f0;box-shadow:2px 2px 0 #000;
+  white-space:nowrap;
+}
+.chip.ok{background:var(--g);color:#05140a}
+.chip.run{background:var(--y);color:#000;animation:blink 1s infinite}
+.chip.err{background:var(--red);color:#fff}
+@keyframes blink{50%{opacity:.75}}
+
+main{padding:12px;max-width:680px;margin:0 auto}
+
+/* Painel principal da Fábrica Pixel */
+.factory-stage{
+  background:linear-gradient(180deg,#12192b 0%,#0d1220 100%);
+  border:3px solid #000;
+  border-radius:10px;
+  padding:12px;
+  margin-bottom:12px;
+  box-shadow:4px 4px 0 #000, inset 0 0 0 2px #263457;
+}
+.stage-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.cat-boss{
+  width:64px;height:64px;flex:none;
+  border:3px solid #000;border-radius:8px;
+  background:#0a0e18;box-shadow:3px 3px 0 var(--red);
+  display:grid;place-items:center;position:relative;overflow:hidden;
+}
+.cat-boss img{width:56px;height:56px;image-rendering:pixelated}
+.cat-boss.bob img{animation:catBob 1.3s steps(2,end) infinite}
+.cat-boss.work img{animation:catWork .55s steps(2,end) infinite}
+@keyframes catBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes catWork{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-4px) scale(1.06)}}
+
+.bubble{
+  flex:1;background:var(--panel2);border:2px solid #000;border-radius:8px;
+  padding:8px 10px;box-shadow:2px 2px 0 #000;
+}
+.bubble b{display:block;font-size:12px;color:var(--y);margin-bottom:2px}
+.bubble small{display:block;font-size:10px;color:#cbd5e1;line-height:1.35}
+
+/* Esteira de Gatinhos da Fábrica (substitui os robôs) */
+.line-title{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:10px;font-weight:900;color:var(--b);text-transform:uppercase;
+  margin:8px 0 6px;letter-spacing:.5px;
+}
+.belt{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:7px;
+  padding:8px;background:#090d17;border:2px solid #000;border-radius:8px;
+  box-shadow:inset 0 2px 0 #182238;
+}
+.cat-pod{
+  background:var(--panel);border:2px solid #000;border-radius:7px;
+  padding:7px 4px;text-align:center;box-shadow:2px 2px 0 #000;
+  transition:transform .12s;
+}
+.cat-pod .px-cat{
+  width:38px;height:38px;margin:0 auto 4px;border-radius:6px;
+  border:2px solid #000;display:grid;place-items:center;
+  background:#0c111d;
+}
+.cat-pod .px-cat img{width:32px;height:32px;image-rendering:pixelated}
+.cat-pod b{display:block;font-size:9px;color:#f1f5f9;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cat-pod span{display:inline-block;margin-top:3px;font-size:8px;font-weight:900;padding:2px 5px;border-radius:4px;background:#1e293b;color:var(--mut)}
+
+.cat-pod.done{border-color:#000;background:#10231a}
+.cat-pod.done .px-cat{box-shadow:0 0 0 2px var(--g)}
+.cat-pod.done span{background:var(--g);color:#041309}
+
+.cat-pod.active{background:#241e0b;transform:translateY(-2px)}
+.cat-pod.active .px-cat{box-shadow:0 0 0 2px var(--y);animation:catWork .5s steps(2,end) infinite}
+.cat-pod.active span{background:var(--y);color:#000}
+
+/* Barra de progresso pixelada */
+.meter{
+  display:grid;grid-template-columns:repeat(20,1fr);gap:3px;
+  margin-top:10px;padding:5px;background:#080b12;
+  border:2px solid #000;border-radius:6px;
+}
+.meter i{display:block;height:10px;background:#1a2236;border-radius:2px}
+.meter i.on{background:var(--y)}
+.meter i.on.ok{background:var(--g)}
+
+.pm{display:flex;justify-content:space-between;font-size:10px;color:var(--mut);margin-top:6px;font-weight:700}
+
+/* Cards padrão pixelados */
+.card{
+  background:var(--panel);border:3px solid #000;border-radius:10px;
+  padding:12px;margin-bottom:12px;box-shadow:4px 4px 0 #000;
+}
+.card h2{
+  margin:0 0 10px;font-size:11px;font-weight:900;letter-spacing:.7px;
+  color:var(--y);text-transform:uppercase;display:flex;align-items:center;justify-content:space-between;
+}
+
+.agents{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ag{
+  background:var(--panel2);border:2px solid #000;border-radius:8px;
+  padding:9px;box-shadow:2px 2px 0 #000;
+}
+.ag b{display:block;font-size:11px;color:#fff}
+.ag small{display:block;font-size:9px;color:var(--mut);margin-top:2px;line-height:1.3}
+.ag i{display:inline-block;margin-top:6px;font-style:normal;font-size:8px;font-weight:900;padding:2px 6px;border-radius:4px;background:#26334d;color:#cbd5e1}
+.ag i.on{background:var(--g);color:#041309}
+.ag i.warn{background:var(--y);color:#000}
+
+label{display:block;font-size:10px;font-weight:700;color:var(--mut);margin:8px 0 4px;text-transform:uppercase}
+input,select{
+  width:100%;padding:9px 10px;border:2px solid #000;border-radius:7px;
+  background:#090d17;color:#fff;font:inherit;font-size:12px;
+  box-shadow:inset 2px 2px 0 #04060a;
+}
+input:focus,select:focus{outline:2px solid var(--y);outline-offset:1px}
+
+.btn{
+  width:100%;margin-top:10px;padding:11px 12px;
+  border:3px solid #000;border-radius:8px;
+  background:var(--y);color:#000;font:inherit;font-size:12px;font-weight:900;
+  text-transform:uppercase;letter-spacing:.4px;cursor:pointer;
+  box-shadow:3px 3px 0 #000;
+}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.g{background:var(--g);color:#041309}
+.btn.r{background:var(--red);color:#fff}
+.btn.w{background:#232f4b;color:#f1f5f9}
+.btn.sm{padding:7px 9px;font-size:10px;margin-top:0;width:auto}
+
+.row{display:flex;gap:8px;align-items:center}
+.row>*{flex:1}
+.sw{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:8px 10px;margin-top:7px;background:var(--panel2);
+  border:2px solid #000;border-radius:7px;font-size:11px;font-weight:700;
+}
+.sw input[type=checkbox]{width:20px;height:20px;accent-color:var(--y);cursor:pointer;box-shadow:none}
+
+.msg{margin-top:8px;font-size:10px;font-weight:700;color:var(--mut);min-height:14px;line-height:1.35}
+.msg.ok{color:var(--g)}
+.msg.er{color:var(--red)}
+
+/* Fila de aprovação */
+.item{
+  background:var(--panel2);border:2px solid #000;border-radius:8px;
+  padding:10px;margin-bottom:9px;box-shadow:2px 2px 0 #000;
+}
+.item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.item b{font-size:12px;color:#fff;line-height:1.3}
+.rank{
+  flex:none;padding:2px 7px;border:2px solid #000;border-radius:5px;
+  font-size:10px;font-weight:900;background:var(--y);color:#000;
+}
+.meta{font-size:10px;color:var(--mut);margin-top:4px}
+.acts{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
+
+/* Thumbnails */
+.lg{
+  width:64px;height:64px;border:2px solid #000;border-radius:8px;
+  background:#090d17;display:grid;place-items:center;overflow:hidden;
+  flex:none;font-size:16px;font-weight:900;color:var(--y);
+}
+.lg img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated}
+#tout{width:100%;max-height:340px;object-fit:contain;border:2px solid #000;border-radius:8px;margin-top:10px;background:#090d17}
+
+/* Player modal */
+#pl{
+  position:fixed;inset:0;z-index:50;background:rgba(4,6,12,.92);
+  display:flex;align-items:center;justify-content:center;padding:16px;
+}
+#pl[hidden]{display:none}
+#pl video{max-width:100%;max-height:82vh;border:3px solid var(--y);border-radius:8px;background:#000}
+
+/* Barra inferior de abas */
+nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:25;
+  display:flex;gap:5px;padding:8px 8px calc(env(safe-area-inset-bottom,0px) + 8px);
+  background:#0b0f1b;border-top:3px solid #000;
+}
+nav button{
+  flex:1;border:2px solid #000;border-radius:7px;padding:9px 3px;
+  font:inherit;font-size:9px;font-weight:900;background:#161f33;color:#cbd5e1;
+  cursor:pointer;box-shadow:2px 2px 0 #000;white-space:nowrap;
+}
+nav button.on{background:var(--y);color:#000;transform:translateY(-2px)}
+nav button span{background:#000;color:var(--y);padding:1px 4px;border-radius:4px;margin-left:2px}
+nav button.on span{background:var(--y);color:#000}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <img class="brand-cat" src="cat_pixel.png" alt="theDaarkNest">
+    <div>
+      <div class="brand-title">theDaarkNest · FÁBRICA</div>
+      <div class="brand-sub">PIXEL DARK AUTOMATION</div>
+    </div>
+  </div>
+  <div class="chip" id="chip">OFFLINE</div>
+</header>
+
+<main>
+  <!-- ABA 1: FÁBRICA PIXEL COM GATINHOS -->
+  <section id="t-fab">
+    <div class="factory-stage">
+      <div class="stage-top">
+        <div class="cat-boss bob" id="mascot">
+          <img src="cat_pixel.png" alt="Gato Mestre">
+        </div>
+        <div class="bubble">
+          <b id="bb">Mestre Gato pronto!</b>
+          <small id="bs">Esteira pixelada ligada para gerar assuntos completos sem cortes.</small>
+        </div>
+      </div>
+
+      <div class="line-title">
+        <span>ESTEIRA DE GATINHOS</span>
+        <span id="line-badge">4 ESTAÇÕES</span>
+      </div>
+      <div class="belt" id="belt"></div>
+
+      <div class="meter" id="meter"></div>
+      <div class="pm"><span id="pmsg">Aguardando comando</span><span id="ppct">0%</span></div>
+    </div>
+
+    <div class="card">
+      <h2>EQUIPAMENTOS & AGENTES</h2>
+      <div class="agents" id="agents"></div>
+    </div>
+
+    <div class="card">
+      <h2>NOVA PRODUÇÃO COMPLETA</h2>
+      <label for="topic">Tema / assunto (vazio = tendência automática)</label>
+      <input id="topic" placeholder="Ex.: Segunda Guerra Mundial">
+      <button class="btn" id="run">▶ LIGAR FÁBRICA DE GATINHOS</button>
+      <div class="msg" id="rmsg"></div>
+    </div>
+  </section>
+
+  <!-- ABA 2: FILA -->
+  <section id="t-fila" hidden>
+    <div class="card">
+      <h2>FILA DE APROVAÇÃO</h2>
+      <div id="list"></div>
+      <div class="msg" id="qmsg"></div>
+    </div>
+  </section>
+
+  <!-- ABA 3: THUMBNAILS -->
+  <section id="t-thumb" hidden>
+    <div class="card">
+      <h2>LOGO DO CANAL (MARCA D'ÁGUA AUTOMÁTICA)</h2>
+      <div class="row" style="align-items:center">
+        <div class="lg" id="lgprev">?</div>
+        <input type="file" id="lgfile" accept="image/*" style="flex:1;margin:0">
+      </div>
+      <label style="margin-top:8px">Usa automaticamente a marca d'água do canal (theDaarkNest) no canto inferior direito.</label>
+      <div class="msg" id="lgmsg"></div>
+    </div>
+
+    <div class="card">
+      <h2>GERAR THUMBNAIL</h2>
+      <label>Vídeo da fila</label><select id="tvid"></select>
+      <label>Título na capa</label><input id="ttitle" placeholder="Texto grande da thumbnail">
+      <label>Formato</label>
+      <select id="tfmt">
+        <option value="9:16">Vertical 9:16 (Shorts / Reels / TikTok)</option>
+        <option value="16:9">Horizontal 16:9 (YouTube)</option>
+      </select>
+      <label>Momento do frame: <b id="tposv">35</b>%</label>
+      <input type="range" id="tpos" min="3" max="97" value="35">
+      <button class="btn" id="tgen">🖼 GERAR THUMBNAIL</button>
+      <div class="msg" id="tmsg"></div>
+      <img id="tout" hidden alt="Thumbnail gerada">
+      <button class="btn w sm" id="tdl" hidden style="margin-top:8px;width:100%">⬇ BAIXAR THUMBNAIL</button>
+    </div>
+  </section>
+
+  <!-- ABA 4: AJUSTES -->
+  <section id="t-cfg" hidden>
+    <div class="card">
+      <h2>CONEXÃO COM O PC</h2>
+      <label>Endereço do servidor</label><input id="server" inputmode="url">
+      <div class="sw"><span>Modo demonstração</span><input type="checkbox" id="demo"></div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn w sm" id="test">TESTAR /HEALTH</button>
+        <button class="btn g sm" id="savec">SALVAR</button>
+      </div>
+      <div class="msg" id="cmsg"></div>
+    </div>
+
+    <div class="card">
+      <h2>AGENTE DARK · theDaarkNest</h2>
+      <label>Nicho</label><input id="niche">
+      <div class="row">
+        <div><label>Horário</label><input id="time" type="time"></div>
+        <div><label>Vídeos/execução</label><select id="count"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div>
+      </div>
+      <label>Duração (Assunto Completo)</label>
+      <select id="dur">
+        <option value="completo_curto">Completo Rápido (50–58 s)</option>
+        <option value="completo_medio">Completo Detalhado (1m30–2m30)</option>
+        <option value="completo_longo">Documentário Completo (3–5 min)</option>
+      </select>
+      <label>Voz</label>
+      <select id="voice">
+        <option value="pt-BR-AntonioNeural">Antônio (grave)</option>
+        <option value="pt-BR-FranciscaNeural">Francisca (natural)</option>
+      </select>
+      <label>Pixabay API key</label><input id="pixabay">
+      <label>Pexels API key</label><input id="pexels">
+      <div class="sw"><span>Agente ativo (diário)</span><input type="checkbox" id="enabled"></div>
+      <div class="sw"><span>Postar sozinho (sem aprovação)</span><input type="checkbox" id="auto"></div>
+      <div class="sw"><span>YouTube Shorts</span><input type="checkbox" id="yt"></div>
+      <div class="sw"><span>Instagram Reels</span><input type="checkbox" id="ig"></div>
+      <label>Instagram User ID</label><input id="iguid">
+      <label>Instagram Access Token</label><input id="igtok" type="password">
+      <div class="sw"><span>TikTok Studio</span><input type="checkbox" id="tt"></div>
+      <label>Modo TikTok</label>
+      <select id="ttmode"><option value="publish">Publicar no feed</option><option value="draft">Rascunho</option></select>
+      <button class="btn g" id="savea">SALVAR AGENTE</button>
+      <div class="msg" id="amsg"></div>
+    </div>
+  </section>
+</main>
+
+<div id="pl" hidden></div>
+
+<nav>
+  <button data-t="fab" class="on">🐱 FÁBRICA</button>
+  <button data-t="fila">🎬 FILA <span id="nq"></span></button>
+  <button data-t="thumb">🖼 THUMB</button>
+  <button data-t="cfg">⚙ AJUSTES</button>
+</nav>
+
+<script>
+const $=s=>document.querySelector(s);
+const store={
+  get:(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},
+  set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
+};
+
+const CAT_STATIONS=[
+  {n:"Gato Roteiro",tag:"ROTEIRO"},
+  {n:"Gato Voz",tag:"NARRAÇÃO"},
+  {n:"Gato Cenas",tag:"PIXABAY"},
+  {n:"Gato Corte",tag:"RENDER"}
+];
+
+const DEMO_Q=[
+  {id:"d1",title:"O submarino fantasma da Segunda Guerra Mundial",viral_score:95,views_est:"180K–620K",duration:54,created_at:"Hoje · 14:20"},
+  {id:"d2",title:"Por que seu cérebro apaga memórias antes de dormir",viral_score:91,views_est:"95K–340K",duration:51,created_at:"Hoje · 11:05"}
+];
+
+const DEMO_CFG={
+  niche:"Curiosidades e Segunda Guerra Mundial",
+  run_time:"20:00",
+  videos_per_run:1,
+  duration_mode:"completo_curto",
+  voice:"pt-BR-AntonioNeural",
+  pixabay_api_key:"",
+  pexels_api_key:"",
+  enabled:true,
+  auto_publish:false,
+  youtube_enabled:false,
+  instagram_enabled:false,
+  instagram_user_id:"",
+  instagram_access_token:"",
+  tiktok_enabled:false,
+  tiktok_publish_mode:"publish"
+};
+
+let cfg=store.get("cfg",{server:"http://192.168.1.100:8000",demo:true});
+let queue=[], agentCfg={...DEMO_CFG}, status={running:false,progress:0,message:"Aguardando comando"};
+
+// Monta esteira de gatinhos
+$("#belt").innerHTML=CAT_STATIONS.map((s,i)=>`
+  <div class="cat-pod" id="st${i}">
+    <div class="px-cat"><img src="cat_pixel.png" alt="${s.n}"></div>
+    <b>${s.n}</b>
+    <span>${s.tag}</span>
+  </div>
+`).join("");
+
+// Monta medidor de 20 blocos
+$("#meter").innerHTML=Array.from({length:20},(_,i)=>`<i id="m${i}"></i>`).join("");
+
+function el(tag,cls,txt){
+  const e=document.createElement(tag);
+  if(cls)e.className=cls;
+  if(txt!==undefined)e.textContent=txt;
+  return e;
+}
+
+function say(node,txt,cls){
+  node.textContent=txt;
+  node.className="msg "+(cls||"");
+}
+
+function base(){
+  return (cfg.server||"").replace(/\/+$/,"");
+}
+
+function setProg(p,m,running,fin){
+  p=Math.max(0,Math.min(100,Math.round(p||0)));
+  $("#ppct").textContent=p+"%";
+  $("#pmsg").textContent=m||(running?"Gatinhos trabalhando…":"Aguardando comando");
+  const lit=Math.round((p/100)*20);
+  for(let i=0;i<20;i++){
+    const b=$("#m"+i);
+    b.className="on".repeat(i<lit?1:0)+(fin&&i<lit?" ok":"");
+  }
+  const activeIdx=running?Math.min(3,Math.floor((p/100)*4)):-1;
+  for(let i=0;i<4;i++){
+    const pod=$("#st"+i);
+    pod.classList.remove("done","active");
+    const badge=pod.querySelector("span");
+    if(fin||(!running&&p===100)){
+      pod.classList.add("done");
+      badge.textContent="PRONTO";
+    }else if(running){
+      if(i<activeIdx){pod.classList.add("done");badge.textContent="OK"}
+      else if(i===activeIdx){pod.classList.add("active");badge.textContent="FAZENDO"}
+      else{badge.textContent=CAT_STATIONS[i].tag}
+    }else{
+      badge.textContent=CAT_STATIONS[i].tag;
+    }
+  }
+  const boss=$("#mascot");
+  boss.classList.toggle("work",!!running);
+  boss.classList.toggle("bob",!running);
+}
+
+function chip(t,c){
+  const e=$("#chip");
+  e.textContent=t;
+  e.className="chip "+(c||"");
+}
+
+function mood(h){
+  const bb=$("#bb"),bs=$("#bs");
+  if(status.running){
+    chip("FÁBRICA LIGADA","run");
+    bb.textContent="Gatinhos a todo vapor!";
+    bs.textContent=status.message||"Montando assunto completo sem cortes…";
+    return;
+  }
+  if(cfg.demo){
+    chip("DEMO PIXEL","ok");
+    bb.textContent="Modo demonstração ativo";
+    bs.textContent="Conecte o IP do PC em AJUSTES para usar seu servidor real.";
+    return;
+  }
+  if(h&&h.ok){
+    chip("ONLINE · v"+(h.version||"2.4"),"ok");
+    bb.textContent="Servidor conectado!";
+    bs.textContent="Pronto para produzir vídeos completos do theDaarkNest.";
+  }else{
+    chip("OFFLINE","err");
+    bb.textContent="Servidor desconectado";
+    bs.textContent="Verifique o iniciar.bat no PC ou ative o Modo demonstração.";
+  }
+}
+
+async function api(path,opts={},ms=25000){
+  const ctrl=new AbortController();
+  const tm=setTimeout(()=>ctrl.abort(),ms);
+  try{
+    const r=await fetch(base()+path,{...opts,signal:ctrl.signal});
+    if(!r.ok)throw new Error("HTTP "+r.status);
+    return await r.json();
+  }finally{
+    clearTimeout(tm);
+  }
+}
+
+async function post(path,body,ms=25000){
+  return api(path,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(body)
+  },ms);
+}
+
+function tab(t){
+  ["fab","fila","thumb","cfg"].forEach(x=>$("#t-"+x).hidden=x!==t);
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.t===t));
+  scrollTo(0,0);
+  if(t==="thumb")load().then(()=>{fillThumbSel();logoPrev()});
+  else if(t!=="cfg")load();
+}
+
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>tab(b.dataset.t));
+
+function renderAgents(a){
+  const nets=[a.youtube_enabled&&"YT",a.instagram_enabled&&"IG",a.tiktok_enabled&&"TT"].filter(Boolean).join(" · ")||"Fila manual";
+  const cards=[
+    {t:"Gato Roteirista",d:"Assunto completo sem cortes",st:a.enabled?"ATIVO":"PAUSADO",cls:a.enabled?"on":""},
+    {t:"Gato Voz & Cenas",d:"Narração + Pixabay/Fundos",st:"PRONTO",cls:"on"},
+    {t:"Marca theDaarkNest",d:"Canto inferior direito",st:"LIGADA",cls:"on"},
+    {t:"Postagem Redes",d:nets,st:a.auto_publish?"AUTO":"APROVAÇÃO",cls:a.auto_publish?"warn":""}
+  ];
+  $("#agents").innerHTML=cards.map(c=>`
+    <div class="ag">
+      <b>${c.t}</b>
+      <small>${c.d}</small>
+      <i class="${c.cls}">${c.st}</i>
+    </div>
+  `).join("");
+}
+
+async function load(){
+  if(cfg.demo){
+    queue=store.get("demo_q",DEMO_Q);
+    agentCfg={...DEMO_CFG,...store.get("demo_acfg",{})};
+    renderAgents(agentCfg);
+    renderQ();
+    mood();
+    return;
+  }
+  try{
+    const [h,q,ac]=await Promise.all([
+      api("/health",{},5000),
+      api("/api/dark/queue",{},8000),
+      api("/api/dark/config",{},8000)
+    ]);
+    queue=q.items||[];
+    if(ac&&ac.config)agentCfg={...DEMO_CFG,...ac.config};
+    status=q.status||status;
+    setProg(status.progress,status.message,status.running,!status.running&&status.progress>=100);
+    renderAgents(agentCfg);
+    renderQ();
+    mood(h);
+  }catch{
+    mood({ok:false});
+  }
+}
+
+const F={niche:"niche",time:"run_time",count:"videos_per_run",dur:"duration_mode",voice:"voice",pixabay:"pixabay_api_key",pexels:"pexels_api_key",iguid:"instagram_user_id",igtok:"instagram_access_token",ttmode:"tiktok_publish_mode"};
+const B={enabled:"enabled",auto:"auto_publish",yt:"youtube_enabled",ig:"instagram_enabled",tt:"tiktok_enabled"};
+
+function fillCfg(c){
+  for(const k in F)if(c[F[k]]!==undefined)$("#"+k).value=String(c[F[k]]);
+  for(const k in B)$("#"+k).checked=!!c[B[k]];
+}
+
+async function saveAgent(){
+  const m=$("#amsg");
+  const patch={};
+  for(const k in F)patch[F[k]]=$("#"+k).value;
+  patch.videos_per_run=+$("#count").value;
+  for(const k in B)patch[B[k]]=$("#"+k).checked;
+  agentCfg={...agentCfg,...patch};
+  renderAgents(agentCfg);
+  if(cfg.demo){
+    store.set("demo_acfg",agentCfg);
+    return say(m,"Configuração salva (demonstração).","ok");
+  }
+  try{
+    await post("/api/dark/config",patch);
+    say(m,"Configuração salva no servidor!","ok");
+  }catch(e){
+    say(m,"Erro: "+e.message,"er");
+  }
+}
+
+async function run(){
+  const m=$("#rmsg"),topic=$("#topic").value.trim();
+  if(cfg.demo){
+    $("#run").disabled=true;
+    say(m,"Gatinhos produzindo vídeo de demonstração…");
+    for(let p=0;p<=100;p+=20){
+      setProg(p,"Gatinhos trabalhando: "+p+"%",true,p===100);
+      await new Promise(r=>setTimeout(r,260));
+    }
+    const item={id:"d"+Date.now(),title:topic||"Segredo histórico completo: "+agentCfg.niche,viral_score:94,views_est:"120K–450K",duration:56,created_at:"Agora"};
+    queue=[item,...queue];
+    store.set("demo_q",queue);
+    renderQ();
+    setProg(100,"Vídeo pronto na Fila!",false,true);
+    $("#run").disabled=false;
+    return say(m,"Pronto! Veja na aba FILA.","ok");
+  }
+  try{
+    $("#run").disabled=true;
+    status.running=true;
+    mood();
+    setProg(10,"Acionando gatinhos no PC…",true,false);
+    await post("/api/dark/run",{topic});
+    const poll=setInterval(async()=>{
+      try{
+        const q=await api("/api/dark/queue",{},8000);
+        queue=q.items||[];
+        status=q.status||status;
+        renderQ();
+        setProg(status.progress,status.message,status.running,!status.running&&status.progress>=100);
+        mood({ok:true});
+        if(!status.running){
+          clearInterval(poll);
+          $("#run").disabled=false;
+          say(m,status.last_error?"Erro: "+status.last_error:"Concluído! Vídeo adicionado à Fila.",status.last_error?"er":"ok");
+        }
+      }catch{}
+    },1800);
+  }catch(e){
+    $("#run").disabled=false;
+    status.running=false;
+    mood({ok:false});
+    say(m,"Erro: "+e.message,"er");
+  }
+}
+
+function rank(s){return s>=95?"S":s>=90?"A":s>=80?"B":"C"}
+
+function renderQ(){
+  $("#nq").textContent=queue.length?String(queue.length):"";
+  const box=$("#list");
+  box.replaceChildren();
+  if(!queue.length){
+    box.append(el("div","meta","Nenhum vídeo aguardando aprovação."));
+    return;
+  }
+  queue.forEach(c=>{
+    const it=el("div","item");
+    const top=el("div","item-top");
+    top.append(el("b","",c.title||"Vídeo Dark"),el("span","rank","RANK "+rank(c.viral_score||90)));
+    const meta=el("div","meta",`Score ${c.viral_score||90} · ${c.views_est||"Viral"} · ${c.duration||55}s · ${c.created_at||""}`);
+    const acts=el("div","acts");
+    const bPlay=el("button","btn w sm","▶ VER");
+    const bAp=el("button","btn g sm","✓ APROVAR");
+    const bDis=el("button","btn r sm","✕");
+    bPlay.onclick=()=>play(c);
+    bAp.onclick=()=>approve(c);
+    bDis.onclick=()=>discard(c);
+    acts.append(bPlay,bAp,bDis);
+    it.append(top,meta,acts);
+    box.append(it);
+  });
+}
+
+async function approve(c){
+  const m=$("#qmsg");
+  if(cfg.demo){
+    queue=queue.filter(x=>x.id!==c.id);
+    store.set("demo_q",queue);
+    renderQ();
+    return say(m,"Aprovado (demonstração).","ok");
+  }
+  try{
+    await post("/api/dark/approve",{item_id:c.id});
+    say(m,"Enviado para publicação!","ok");
+    load();
+  }catch(e){say(m,"Erro: "+e.message,"er")}
+}
+
+async function discard(c){
+  const m=$("#qmsg");
+  if(cfg.demo){
+    queue=queue.filter(x=>x.id!==c.id);
+    store.set("demo_q",queue);
+    renderQ();
+    return say(m,"Removido.","ok");
+  }
+  try{
+    await post("/api/dark/discard",{item_id:c.id});
+    say(m,"Descartado.","ok");
+    load();
+  }catch(e){say(m,"Erro: "+e.message,"er")}
+}
+
+function play(c){
+  if(cfg.demo)return say($("#qmsg"),"No modo demonstração não há MP4 real; conecte o PC para assistir.","er");
+  const p=$("#pl");
+  p.replaceChildren();
+  const v=el("video");
+  v.src=base()+c.url;
+  v.controls=true;v.autoplay=true;v.playsInline=true;
+  p.append(v);p.hidden=false;
+  p.onclick=e=>{if(e.target===p){v.pause();p.hidden=true;p.replaceChildren()}};
+}
+
+let logoData=null,thumbUrl="",thumbDl="";
+function fillThumbSel(){
+  const s=$("#tvid");s.replaceChildren();
+  queue.forEach(c=>{const o=el("option","",c.title);o.value=c.id;s.append(o)});
+  if(queue[0])$("#ttitle").value=queue[0].title;
+}
+
+function logoPrev(){
+  const p=$("#lgprev");p.replaceChildren();p.textContent="?";
+  const show=u=>{p.textContent="";const i=el("img");i.src=u;p.append(i)};
+  if(cfg.demo){show(logoData||"watermark.png");return}
+  api("/api/thumb/info",{},6000)
+    .then(r=>{if(r.has_logo)show(base()+"/api/thumb/logo?"+Date.now());else show("watermark.png")})
+    .catch(()=>show("watermark.png"));
+}
+
+function demoThumb(b){
+  const [W,H]=b.fmt==="16:9"?[1280,720]:[1080,1920];
+  const c=document.createElement("canvas");c.width=W;c.height=H;
+  const x=c.getContext("2d");
+  const g=x.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,"#07060d");g.addColorStop(.5,"#1e1345");g.addColorStop(1,"#0a2538");
+  x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.textAlign="center";x.lineJoin="round";
+  const fs=W/9;x.font="900 "+fs+"px Arial Black,Impact,sans-serif";
+  const lines=[];let cur="";
+  (b.title||"VÍDEO").toUpperCase().split(" ").forEach(w=>{
+    const t=(cur+" "+w).trim();
+    if(x.measureText(t).width<W*.88||!cur)cur=t;
+    else{lines.push(cur);cur=w}
+  });
+  lines.push(cur);
+  let y=(b.fmt==="16:9"?H/2:H*.66)-fs*1.1*lines.length/2+fs*.8;
+  lines.forEach((l,i)=>{
+    x.lineWidth=W/45;x.strokeStyle="#000";x.strokeText(l,W/2,y);
+    x.fillStyle=i===lines.length-1?"#ffe11a":"#fff";x.fillText(l,W/2,y);
+    y+=fs*1.1;
+  });
+  return new Promise(r=>{
+    const done=()=>r(c.toDataURL("image/jpeg",.9));
+    const srcLogo=logoData||"watermark.png";
+    const im=new Image();
+    im.onload=()=>{
+      const w=W*(b.fmt==="16:9"?.13:.22),h=im.height*w/im.width,m=W*.035;
+      x.drawImage(im,W-w-m,H-h-m,w,h);done();
+    };
+    im.onerror=done;
+    im.src=srcLogo;
+  });
+}
+
+async function genThumb(){
+  const m=$("#tmsg"),id=$("#tvid").value;
+  const b={item_id:id,title:$("#ttitle").value.trim(),fmt:$("#tfmt").value,position:$("#tpos").value/100};
+  if(!id)return say(m,"Nenhum vídeo na fila. Gere um na aba FÁBRICA.","err");
+  $("#tgen").disabled=true;say(m,"Gerando thumbnail…");
+  let hasLogo;
+  try{
+    if(cfg.demo){thumbUrl=await demoThumb(b);thumbDl=null;hasLogo=true}
+    else{const r=await post("/api/thumb/generate",b,60000);thumbUrl=base()+r.url+"?"+Date.now();thumbDl=base()+r.download;hasLogo=r.has_logo}
+    $("#tout").src=thumbUrl;$("#tout").hidden=false;$("#tdl").hidden=false;
+    say(m,hasLogo?"Pronto! Marca aplicada no canto inferior direito.":"Pronta!","ok");
+  }catch(e){say(m,"Erro: "+e.message,"err")}
+  finally{$("#tgen").disabled=false}
+}
+
+$("#lgfile").onchange=e=>{
+  const f=e.target.files[0],m=$("#lgmsg");if(!f)return;
+  const r=new FileReader();
+  r.onload=async()=>{
+    logoData=r.result;
+    if(cfg.demo){logoPrev();return say(m,"Logo carregada (demonstração).","ok")}
+    try{await post("/api/thumb/logo",{data:r.result},30000);logoPrev();say(m,"Logo salva no PC!","ok")}
+    catch(err){say(m,"Erro: "+err.message,"err")}
+  };
+  r.readAsDataURL(f);
+};
+
+$("#tvid").onchange=()=>{const c=queue.find(x=>x.id===$("#tvid").value);if(c)$("#ttitle").value=c.title};
+$("#tpos").oninput=()=>$("#tposv").textContent=$("#tpos").value;
+$("#tgen").onclick=genThumb;
+$("#tdl").onclick=()=>{if(thumbDl)location.href=thumbDl;else{const a=document.createElement("a");a.href=thumbUrl;a.download="thumbnail.jpg";a.click()}};
+
+$("#run").onclick=run;
+$("#savea").onclick=saveAgent;
+$("#savec").onclick=()=>{
+  cfg.server=$("#server").value.trim()||cfg.server;
+  cfg.demo=$("#demo").checked;
+  store.set("cfg",cfg);
+  say($("#cmsg"),"Conexão salva.","ok");
+  load();
+};
+$("#test").onclick=async()=>{
+  const m=$("#cmsg");cfg.server=$("#server").value.trim();say(m,"Testando…");
+  try{
+    const h=await api("/health",{},6000);
+    say(m,"Online · v"+(h.version||"2.4")+" · FFmpeg "+(h.ffmpeg?"✓":"×")+" · Gemini "+(h.gemini?"✓":"×"),"ok");
+  }catch(e){say(m,"Falhou: "+e.message,"err")}
+};
+
+fillCfg(agentCfg);
+$("#server").value=cfg.server;
+$("#demo").checked=cfg.demo;
+setProg(0,"Aguardando comando",false);
+load();
+</script>
+</body>
+</html>
