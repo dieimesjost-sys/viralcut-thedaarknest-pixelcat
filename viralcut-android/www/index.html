@@ -244,7 +244,7 @@ nav button.on span{background:var(--y);color:#000}
 
 <header>
   <div class="brand">
-    <img class="brand-cat" src="cat_pixel.png" alt="theDaarkNest">
+    <img class="brand-cat" src="cat_boss_cthulhu.png" alt="theDaarkNest">
     <div>
       <div class="brand-title">theDaarkNest · FÁBRICA</div>
       <div class="brand-sub">PIXEL DARK AUTOMATION</div>
@@ -259,7 +259,7 @@ nav button.on span{background:var(--y);color:#000}
     <div class="factory-stage">
       <div class="stage-top">
         <div class="cat-boss bob" id="mascot">
-          <img src="cat_pixel.png" alt="Gato Mestre">
+          <img src="cat_boss_cthulhu.png" alt="Gato Cthulhu Mestre">
         </div>
         <div class="bubble">
           <b id="bb">Mestre Gato pronto!</b>
@@ -395,10 +395,10 @@ const store={
 };
 
 const CAT_STATIONS=[
-  {n:"Gato Roteiro",tag:"ROTEIRO"},
-  {n:"Gato Voz",tag:"NARRAÇÃO"},
-  {n:"Gato Cenas",tag:"PIXABAY"},
-  {n:"Gato Corte",tag:"RENDER"}
+  {n:"Gato Lobisomem",tag:"ROTEIRO",img:"cat_monstro_lobisomem.png"},
+  {n:"Gato Múmia",tag:"NARRAÇÃO",img:"cat_monstro_mumia.png"},
+  {n:"Gato Fantasma",tag:"PIXABAY",img:"cat_monstro_fantasma.png"},
+  {n:"Gato Franken",tag:"RENDER",img:"cat_monstro_franken.png"}
 ];
 
 const DEMO_Q=[
@@ -430,7 +430,7 @@ let queue=[], agentCfg={...DEMO_CFG}, status={running:false,progress:0,message:"
 // Monta esteira de gatinhos
 $("#belt").innerHTML=CAT_STATIONS.map((s,i)=>`
   <div class="cat-pod" id="st${i}">
-    <div class="px-cat"><img src="cat_pixel.png" alt="${s.n}"></div>
+    <div class="px-cat"><img src="${s.img}" alt="${s.n}"></div>
     <b>${s.n}</b>
     <span>${s.tag}</span>
   </div>
